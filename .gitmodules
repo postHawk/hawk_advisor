@@ -1,0 +1,6 @@
+[submodule "hawk_api"]
+	path = hawk_api
+	url = https://bitbucket.org/Slavenin/hawk_api
+[submodule "Hawk_chat"]
+	path = Hawk_chat
+	url = https://bitbucket.org/Slavenin/hawk_chat

@@ -1,0 +1,279 @@
+.chat-container{
+	min-width: 0px;
+	width: 294px;
+	min-height: 0px;
+	border-radius: 10px;
+}
+
+.chat-logo{
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.chat-row{
+	padding: 5px;
+	border-bottom: none;
+}
+
+#chat{
+	bottom: 0px;
+	display: inline-block;
+	position: absolute;
+	bottom: 0px;
+	right: 5px;
+}
+
+.chat-tabs{
+	display: none;
+}
+
+.chat-header{
+	background-color: transparent;
+}
+
+.chat-panel-wrapper{
+	border: 1px solid black;
+}
+
+.chat-body{
+	background-color: #ddd;
+	border: 10px solid #353d49;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.chat-text-input {
+	background-color: #3C424A;
+	margin-left: 0;
+	margin-bottom: 0;
+	border-radius: 0px;
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: 10px;
+	height: 50px;
+	border-top: 5px solid #353d49;
+}
+
+/* ------------------------------------------
+PURE CSS SPEECH BUBBLES
+by Nicolas Gallagher
+- http://nicolasgallagher.com/pure-css-speech-bubbles/
+
+http://nicolasgallagher.com
+http://twitter.com/necolas
+
+Created: 02 March 2010
+Version: 1.2 (03 March 2011)
+
+Dual licensed under MIT and GNU GPLv2 Nicolas Gallagher
+------------------------------------------ */
+
+/* NOTE: Some declarations use longhand notation so that it can be clearly
+explained what specific properties or values do and what their relationship
+is to other properties or values in creating the effect */
+
+/* ============================================================================================================================
+== GENERAL STYLES
+** ============================================================================================================================ */
+
+body {
+  padding:0;
+  margin:0;
+  font:1em/1.4 Cambria, Georgia, sans-serif;
+  color:#333;
+  background:#fff;
+}
+
+a:link,
+a:visited {
+  border-bottom:1px solid #c55500;
+  text-decoration:none;
+  color:#c55500;
+}
+
+a:visited {
+  border-bottom:1px solid #730800;
+  color:#730800;
+}
+
+a:hover,
+a:focus,
+a:active {
+  border:0;
+  color:#fff;
+  background:#c55500;
+}
+
+a:visited:hover,
+a:visited:focus,
+a:visited:active {
+  color:#fff;
+  background:#730800;
+}
+
+#container {
+  width:500px;
+  padding:0 0 50px;
+  margin:0 auto;
+}
+
+h1 {
+  margin:1em 0 0;
+  font-size:2.5em;
+  font-weight:normal;
+  line-height:1.2;
+  text-align:center;
+}
+
+h2 {
+  margin:0.5em 0 1.5em;
+  font-size:1.25em;
+  font-weight:normal;
+  font-style:italic;
+  text-align:center;
+}
+
+p {
+  margin:1em 0;
+}
+
+.content h2 {
+  margin:2em 0 0.75em;
+  font-size:2em;
+  font-weight:bold;
+  font-style:normal;
+  text-align:left;
+}
+
+blockquote {
+  margin:1em 0;
+}
+
+blockquote p {
+  margin:0;
+  font-size:2em;
+}
+
+.follow {
+  clear:both;
+  margin-top:2em;
+  font-size:1.125em;
+}
+
+.follow span {
+  font-weight:bold;
+}
+
+
+/*
+ Should you want to set a background colour on a containing element
+ certain types of bubble effect may require you to include these
+ style declarations.
+ */
+.content {
+  position:relative;
+  z-index:1;
+}
+
+
+/* ============================================================================================================================
+== BUBBLE WITH A RIGHT-ANGLED TRIANGLE
+** ============================================================================================================================ */
+
+/* THE SPEECH BUBBLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right {
+  position:relative;
+  padding:15px;
+  margin:0.1em 0 1em;
+  color:#fff;
+  background:#075698; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+  background:-moz-linear-gradient(#2e88c4, #075698);
+  background:-o-linear-gradient(#2e88c4, #075698);
+  background:linear-gradient(#2e88c4, #075698);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* Variant : for top positioned triangle
+------------------------------------------ */
+
+.triangle-right.top {
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#075698), to(#2e88c4));
+  background:-moz-linear-gradient(#075698, #2e88c4);
+  background:-o-linear-gradient(#075698, #2e88c4);
+  background:linear-gradient(#075698, #2e88c4);
+}
+
+/* Variant : for left positioned triangle
+------------------------------------------ */
+
+.triangle-right.left {
+  margin-left:30px;
+  background:#075698;
+  margin-right: 10px;
+}
+
+/* Variant : for right positioned triangle
+------------------------------------------ */
+
+.triangle-right.right {
+  margin-right:30px;
+  background:#075698;
+  margin-left: 10px;
+}
+
+/* THE TRIANGLE
+------------------------------------------------------------------------------------------------------------------------------- */
+
+.triangle-right:after {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:50px; /* controls horizontal position */
+  border-width:20px 0 0 20px; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#075698 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* Variant : top
+------------------------------------------ */
+
+.triangle-right.top:after {
+  top:-20px; /* value = - border-top-width - border-bottom-width */
+  right:50px; /* controls horizontal position */
+  bottom:auto;
+  left:auto;
+  border-width:20px 20px 0 0; /* vary these values to change the angle of the vertex */
+  border-color:transparent #075698;
+}
+
+/* Variant : left
+------------------------------------------ */
+
+.triangle-right.left:after {
+  top:16px;
+  left:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  border-width:15px 40px 0 0; /* vary these values to change the angle of the vertex */
+  border-color:transparent #075698;
+}
+
+/* Variant : right
+------------------------------------------ */
+
+.triangle-right.right:after {
+  top:16px;
+  right:-40px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  left:auto;
+  border-width:15px 0 0 40px; /* vary these values to change the angle of the vertex */
+  border-color:transparent #075698 ;
+}

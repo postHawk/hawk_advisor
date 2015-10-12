@@ -1,0 +1,69 @@
+.chat{
+	width: 50%;
+	float: right;
+	height: 605px;
+}
+
+.admin-header{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	padding: 20px;
+	margin-bottom: 15px;
+	background-color: #353d49;
+	color: whitesmoke;
+}
+
+.admin-header h1{
+	margin-top: 0px;
+}
+
+.chat-container{
+	min-width: 100px;
+	height: 394px;
+	top: 0px;
+	left: 0px
+}
+
+.chat-logo img{
+	content: url('/img/logo_main.png');
+}
+
+.map{
+	width: 100%;
+	height: 500px;
+}
+
+.graphs{
+	width: 50%;
+	display: inline-block;
+}
+
+.graphs div{
+	display: inline-block;
+}
+
+#chart{
+	width: 100%;
+	height: 250px;
+}
+
+.online-chart{
+	height: 200px;
+	width: 30%;
+	text-align: center;
+	vertical-align: top;
+	margin-right: -4px;
+}
+
+#browsers{
+	width: 70%;
+	height: 200px;
+	vertical-align: top;
+	margin-right: -2px;
+}
+
+.wrapper{
+	width: 80%;
+	margin-left: 10%;
+}
