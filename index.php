@@ -10,7 +10,7 @@ if (session_status() != PHP_SESSION_ACTIVE)
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Hawk Analitics</title>
+        <title>Hawk Advisor</title>
 		<link rel="stylesheet" type="text/css" href="Hawk_chat/src/hawk_chat.css"/>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 		<link rel="stylesheet" type="text/css" href="Hawk_chat/lib/jquery.mCustomScrollbar.min.css"/>
