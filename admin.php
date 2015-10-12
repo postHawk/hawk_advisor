@@ -31,13 +31,6 @@ if (session_status() != PHP_SESSION_ACTIVE)
 				groupName: 'AllUsers'
 			};
 		</script>
-		<style>
-			#content-8.content p {
-				width: 710px;
-				float: left;
-				margin: 15px 20px;
-			}
-		</style>
     </head>
     <body>
 		<div class="wrapper">

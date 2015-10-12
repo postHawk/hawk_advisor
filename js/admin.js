@@ -37,10 +37,11 @@ var STAT = {
 };
 
 $(document).ready(function () {
+	//инициализируем чат
 	$('#chat').hawkChat({
 		userId: CHAT_CONTROL.userId, //id пользователя
 		serverSideUrl: 'Chat.php', //адрес серверного скрипта
-		groupName: CHAT_CONTROL.groupName,
+		groupName: CHAT_CONTROL.groupName, //группа куда будут добавлены все пользователи
 		onInMessage: function(msg, str) {
 			if(msg.event === 'hawk.ping')
 			{
@@ -50,33 +51,49 @@ $(document).ready(function () {
 			msg.text.from_login = msg.text.from_login.substr(0, 10);
 
 			return -1;
-		}
+		}//добавляем обработчик входящего сообщения для модификации логина пользователя
 	});
 
+	//инициализируем графики
     initGraphs();
 
-	HAWK_API.bind_handler('initialized', onHawkInit);
+	//подписываемся на пинг от пользователя
 	HAWK_API.bind_handler('ping', onUserPing);
+	//подписываемся на обновление списка пользователей
 	HAWK_API.bind_handler('get_by_group', onUserList);
-
 });
 
+/**
+ * Функция обрабатывает пользовательское сообщение
+ * @param {Object} e событие
+ * @param {Object} msg сообщение
+ * @returns {undefined}
+ */
 function onUserPing(e, msg)
 {
+	//сохраняем или обновляем информацию о пользователе
 	var info = msg.text.info;
 	STAT.userInfo[msg.from] = info;
 
+	//записываем текущую страницу пользователя
 	if(!STAT.pageToUser.hasOwnProperty(info.page))
 	{
 		STAT.pageToUser[info.page] = [];
 	}
 
+	//и добавляем его в массив пользователей страницы
 	if($.inArray(msg.from, STAT.pageToUser[info.page]) === -1)
 	{
 		STAT.pageToUser[info.page].push(msg.from);
 	}
 }
 
+/**
+ * Обновляем инормацию о пользователях
+ * @param {Object} e событие
+ * @param {Object} msg сообщение
+ * @returns {undefined}
+ */
 function onUserList(e, msg)
 {
 	var onlineUsers = [];
@@ -105,15 +122,19 @@ function onUserList(e, msg)
 	});
 
 	var pages = STAT.pageToUser;
+	//перебираем циклом все имеющиеся страницы
 	for(var page in pages)
 	{
+		//фильтруем пользователей на странице
 		pages[page] = pages[page].filter(function (pUser) {
+			//если пользователя нет на странице, удаляем его
 			if($.inArray(pUser, onlineUsers) === -1 || STAT.userInfo[pUser].page !== page)
 				return false;
 
 			return true;
 		});
 
+		//если пользователей на странице не осталось удаляем страницу
 		if(!pages[page].length)
 		{
 			delete pages[page];
@@ -122,18 +143,19 @@ function onUserList(e, msg)
 
 	$('#user_count').html(onlineUsers.length);
 
+	//обновляем графики и карту
 	updatePageGraph();
 	updateBrowserGraph();
 	updateMap();
 }
 
-function onHawkInit()
-{
-	//можно что-нибудь сделать после инициализации подключения
-}
-
+/**
+ * Обновляем информацию на графиках страниц
+ * @returns {undefined}
+ */
 function updatePageGraph()
 {
+	//если процесс обновления уже запущен возвращаемся
 	if(STAT.graphPageUpdating)
 	{
 		return;
@@ -141,14 +163,15 @@ function updatePageGraph()
 
 	STAT.graphPageUpdating = true;
 
+	//формируем серии для графика
 	var series = [];
-
 	var pages = STAT.pageToUser;
 	for(var page in pages)
 	{
 		series.push([page, pages[page].length]);
 	}
 
+	//обновляем графики
 	var chart = STAT.pageGraph.highcharts();
 	chart.series[0].setData(series);
 	chart.redraw();
@@ -156,8 +179,13 @@ function updatePageGraph()
 	STAT.graphPageUpdating = false;
 }
 
+/**
+ * Обновляем информацию на графиках пользователей
+ * @returns {undefined}
+ */
 function updateBrowserGraph()
 {
+	//если процесс обновления уже запущен возвращаемся
 	if(STAT.graphBrowserUpdating)
 	{
 		return;
@@ -165,10 +193,10 @@ function updateBrowserGraph()
 
 	STAT.graphBrowserUpdating = true;
 
-
 	var browsers = {};
 	var users = STAT.userInfo;
 
+	//перебираем информацию пользователей
 	for(var user in users)
 	{
 		var browser = users[user].browser;
@@ -177,8 +205,10 @@ function updateBrowserGraph()
 			continue;
 		}
 
-		browser	= browser.name.toString().substr(1, 10) + ' '
+		//формируем строку с названием браузера
+		browser	= browser.name.toString().substr(0, 10) + ' '
 				+ ((browser.version) ? ' (' + browser.version + ')' : '(не определено)');
+		//считаем количество браузеров
 		if(!browsers.hasOwnProperty(browser))
 		{
 			browsers[browser] = 0;
@@ -187,12 +217,14 @@ function updateBrowserGraph()
 		browsers[browser]++;
 	}
 
+	//формируем сирии для графика
 	var series = [];
 	for(var browser in browsers)
 	{
 		series.push([browser, browsers[browser]]);
 	}
 
+	//обновляем график
 	var chart = STAT.browserGraph.highcharts();
 	chart.series[0].setData(series);
 	chart.redraw();
@@ -200,8 +232,13 @@ function updateBrowserGraph()
 	STAT.graphBrowserUpdating = false;
 }
 
+/**
+ * Функция первоначальной инициализации графиков
+ * @returns {undefined}
+ */
 function initGraphs()
 {
+	//график пользователей
 	STAT.pageGraph = $('#chart').highcharts({
         chart: {
             type: 'column'
@@ -242,11 +279,9 @@ function initGraphs()
 			data: []
 		}]
     });
+	//график браузеров
 	STAT.browserGraph = $('#browsers').highcharts({
 		chart: {
-//            plotBackgroundColor: null,
-//            plotBorderWidth: null,
-//            plotShadow: false,
             type: 'pie'
         },
         title: {
@@ -275,10 +310,15 @@ function initGraphs()
         }]
 	});
 }
-
+//подписываемся на инициализацию карты
 ymaps.ready(initMap);
 
+/**
+ * Функция выполняет инициализацию карты
+ * @returns {undefined}
+ */
 function initMap () {
+	//создаём карту
     var myMap = new ymaps.Map("map", {
             center: [55.76, 37.64],
             zoom: 2,
@@ -287,6 +327,7 @@ function initMap () {
             searchControlProvider: 'yandex#search'
         });
 
+	//создаём менеджер объектов
 	STAT.objectManager = new ymaps.ObjectManager({
 		// Чтобы метки начали кластеризоваться, выставляем опцию.
 		clusterize: true,
@@ -297,14 +338,21 @@ function initMap () {
 	myMap.geoObjects.add(STAT.objectManager);
 }
 
+/**
+ * Функция обновляет информацию
+ * о пользователях на карте
+ * @returns {undefined}
+ */
 function updateMap()
 {
 	if(!STAT.objectManager)
 	{
 		return;
 	}
+	//очищаем карту
 	STAT.objectManager.removeAll();
 	var users = STAT.userInfo;
+	//формируем новый массив координат пользователей
 	var points = [];
 	for(var user in users)
 	{
@@ -324,5 +372,7 @@ function updateMap()
 
 		}
 	}
+
+	//добавляем на карту
 	STAT.objectManager.add(points)
 }
