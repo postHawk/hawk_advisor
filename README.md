@@ -1,5 +1,3 @@
-# Электронный консультант основанный на сервисе [POST HAWK](https://post-hawk.com) и [чате](https://bitbucket.org/Slavenin/hawk_chat)
-
+# Электронный консультант основанный на сервисе [POST HAWK](https://github.com/postHawk) и [чате](https://github.com/postHawk/hawk_chat)
 Разместите в необходимых местах вашего проекта файлы плагина.
-
 Подробнее вы можете прочитать в [документации](http://api.post-hawk.com/электронный-консультант/).
