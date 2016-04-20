@@ -29,6 +29,9 @@ class Сhat extends hawk_api
 			case 'register_user':
 				$this->add_user();
 				break;
+			case 'check_token':
+				$this->check_user();
+				break;
 			default:
 				throw new \Exception('Unknow action');
 		}
@@ -65,6 +68,13 @@ class Сhat extends hawk_api
 
         echo json_encode($res);
     }
+
+	private function check_user()
+	{
+		ob_clean();
+		echo $this->check_token($_POST['token']);
+		exit();
+	}
 }
 
 $chat = new Сhat('Nflz2H7VcQ6Rve8lo3NDAKavZL+lSmUd5CuhhN585iHN4XsuTsE8O5N2U823egECQNWkVpFq45TLfCl1rALHhw==');
