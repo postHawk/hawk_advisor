@@ -1,4 +1,4 @@
-# Электронный консультант основанный на сервисе [POST HAWK](https://github.com/postHawk) и [чате](https://github.com/postHawk/hawk_chat)
+# Электронный консультант основанный на [чате](https://github.com/postHawk/hawk_chat) [POST HAWK](https://github.com/postHawk)
 
 Склонируйте репозиторий:
 ```bash
